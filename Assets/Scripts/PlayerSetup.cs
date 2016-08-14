@@ -2,46 +2,49 @@
 using System.Collections;
 using UnityEngine.Networking;
 
-[RequireComponent(typeof(Player))]
-[RequireComponent(typeof(PlayerController))]
-public class PlayerSetup : NetworkBehaviour
+namespace Ruihanyang.Game
 {
-    [SerializeField]
-    private Behaviour[] componentsToDisable;
-
-    void Start()
+    [RequireComponent(typeof(Player))]
+    [RequireComponent(typeof(PlayerController))]
+    public class PlayerSetup : NetworkBehaviour
     {
-        if (!isLocalPlayer)
+        [SerializeField]
+        private Behaviour[] componentsToDisable;
+
+        void Start()
         {
-            DisableComponents();
+            if (!isLocalPlayer)
+            {
+                DisableComponents();
+            }
+            else
+            {
+                Player _player = GetComponent<Player>();
+                GameManager.LocalPlayer = _player;
+            }
         }
-        else
+
+        public override void OnStartClient()
         {
+            base.OnStartClient();
+
+            string _netID = GetComponent<NetworkIdentity>().netId.ToString();
             Player _player = GetComponent<Player>();
-            GameManager.LocalPlayer = _player;
+
+            GameManager.RegisterPlayer(_netID, _player);
         }
-    }
 
-    public override void OnStartClient()
-    {
-        base.OnStartClient();
-
-        string _netID = GetComponent<NetworkIdentity>().netId.ToString();
-        Player _player = GetComponent<Player>();
-
-        GameManager.RegisterPlayer(_netID, _player);
-    }
-
-    void OnDisable()
-    {
-        GameManager.UnRegisterPlayer(transform.name);
-    }
-
-    void DisableComponents()
-    {
-        for (int i = 0; i < componentsToDisable.Length; i++)
+        void OnDisable()
         {
-            componentsToDisable[i].enabled = false;
+            GameManager.UnRegisterPlayer(transform.name);
+        }
+
+        void DisableComponents()
+        {
+            for (int i = 0; i < componentsToDisable.Length; i++)
+            {
+                componentsToDisable[i].enabled = false;
+            }
         }
     }
 }

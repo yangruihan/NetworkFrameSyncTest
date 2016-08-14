@@ -1,25 +1,29 @@
 ﻿using UnityEngine;
 
-[RequireComponent(typeof(Player))]
-[RequireComponent(typeof(PlayerMotor))]
-public class PlayerController : MonoBehaviour
+namespace Ruihanyang.Game
 {
-    [SerializeField]
-    private Player player;
 
-    public void HandleUserInput()
+    [RequireComponent(typeof(Player))]
+    [RequireComponent(typeof(PlayerMotor))]
+    public class PlayerController : MonoBehaviour
     {
-        // 处理位移输入
-        HandleMoveInput();
-    }
+        [SerializeField]
+        private Player player;
 
-    private void HandleMoveInput()
-    {
-        float _x = Input.GetAxis("Horizontal");
-        float _y = Input.GetAxis("Vertical");
+        public void HandleUserInput()
+        {
+            // 处理位移输入
+            HandleMoveInput();
+        }
 
-        Vector3 _moveDirection = new Vector3(_x, _y, 0f);
+        private void HandleMoveInput()
+        {
+            float _x = Input.GetAxis("Horizontal");
+            float _y = Input.GetAxis("Vertical");
 
-        player.motor.Move(_moveDirection);
+            Vector3 _moveDirection = new Vector3(_x, _y, 0f);
+
+            player.motor.Move(_moveDirection);
+        }
     }
 }

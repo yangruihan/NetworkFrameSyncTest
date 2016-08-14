@@ -1,28 +1,31 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-[RequireComponent(typeof(Rigidbody2D))]
-public class PlayerMotor : MonoBehaviour
+namespace Ruihanyang.Game
 {
-    [SerializeField]
-    private float moveSpeed = 5f;
-
-    private Vector2 targetPosition;
-
-    private Rigidbody2D rigid;
-
-    void Start()
+    [RequireComponent(typeof(Rigidbody2D))]
+    public class PlayerMotor : MonoBehaviour
     {
-        rigid = GetComponent<Rigidbody2D>();
-    }
+        [SerializeField]
+        private float moveSpeed = 5f;
 
-    void FixedUpdate()
-    {
-        rigid.MovePosition(Vector3.Lerp(transform.position, targetPosition, 1 / moveSpeed * Time.deltaTime));
-    }
+        private Vector2 targetPosition;
 
-    public void Move(Vector3 _direction)
-    {
-        targetPosition = transform.position + _direction;
+        private Rigidbody2D rigid;
+
+        void Start()
+        {
+            rigid = GetComponent<Rigidbody2D>();
+        }
+
+        void FixedUpdate()
+        {
+            rigid.MovePosition(Vector3.Lerp(transform.position, targetPosition, 1 / moveSpeed * Time.deltaTime));
+        }
+
+        public void Move(Vector3 _direction)
+        {
+            targetPosition = transform.position + _direction;
+        }
     }
 }
