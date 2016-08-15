@@ -38,7 +38,7 @@ namespace Ruihanyang.Game
             }
             else
             {
-                lobbyMainMenu.OnClickJoin();
+                lobbyMainMenu.JoinHost(GameMatchUtil.HostIp);
             }
 
             showInfoPanel.SetActive(false);

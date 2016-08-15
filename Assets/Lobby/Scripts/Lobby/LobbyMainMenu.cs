@@ -44,6 +44,24 @@ namespace Prototype.NetworkLobby
             lobbyManager.SetServerInfo("Connecting...", lobbyManager.networkAddress);
         }
 
+        public void StartHost()
+        {
+            lobbyManager.StartHost();
+        }
+
+        public void JoinHost(string _hostIp)
+        {
+            lobbyManager.ChangeTo(lobbyPanel);
+
+            lobbyManager.networkAddress = _hostIp;
+            lobbyManager.StartClient();
+
+            lobbyManager.backDelegate = lobbyManager.StopClientClbk;
+            lobbyManager.DisplayIsConnecting();
+
+            lobbyManager.SetServerInfo("Connecting...", lobbyManager.networkAddress);
+        }
+
         public void OnClickDedicated()
         {
             lobbyManager.ChangeTo(null);
